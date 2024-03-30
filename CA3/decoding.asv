@@ -1,0 +1,25 @@
+function coded_msg=decoding(img,mapset)
+
+end_char=';';
+binary_end_char=dec2bin(find(strcmp(end_char,mapset(1,:))==1)-1);
+
+
+
+for i=1:numel(img)
+    num=dec2bin(img(i),5);
+    binary_msg=strcat(binary_msg,num(8));
+    if(rem(i,5)==0)
+        if(binary_msg(end-4:end)==binary_end_char)
+            break;
+        end
+    end
+end
+
+lenMsg=length(binary_msg)/5;
+idx=[];
+for i=1:lenMsg
+    idx=[idx, find(strcmp(binary_msg(5*i-4:5*i),mapset(2,:))==1) ];
+end
+coded_msg=cell2mat(mapset(1,idx));
+
+end
